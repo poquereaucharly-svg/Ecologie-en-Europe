@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>L'écologie en Europe</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #f5f7f2;
+      color: #1a1a1a;
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+
+    .site { max-width: 740px; margin: 0 auto; }
+
+    .header {
+      text-align: center;
+      padding: 2rem 1rem 1.5rem;
+      background: #fff;
+      border-radius: 14px;
+      border: 1px solid #e0e8da;
+      margin-bottom: 1.5rem;
+    }
+    .header h1 { font-size: 24px; font-weight: 600; color: #1a3a2a; }
+    .header p { font-size: 14px; color: #6b7c6b; margin-top: 6px; }
+
+    .tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1.25rem; }
+    .tab-btn {
+      padding: 7px 16px;
+      font-size: 13px;
+      font-weight: 500;
+      border: 1px solid #c8d8c0;
+      border-radius: 20px;
+      background: #fff;
+      color: #4a6050;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .tab-btn:hover { background: #eaf3de; }
+    .tab-btn.active { background: #1D9E75; border-color: #1D9E75; color: #fff; }
+
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    .panel-card {
+      background: #fff;
+      border-radius: 14px;
+      border: 1px solid #e0e8da;
+      padding: 1.75rem;
+    }
+
+    .panel-header { display: flex; align-items: center; gap: 12px; margin-bottom: 1.25rem; }
+    .panel-icon {
+      width: 42px; height: 42px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; flex-shrink: 0;
+    }
+    .panel-title { font-size: 20px; font-weight: 600; color: #1a3a2a; }
+
+    .definition {
+      background: #f0f5ec;
+      border: 1px solid #d0dfc8;
+      border-radius: 10px;
+      padding: 12px 16px;
+      margin-bottom: 1.25rem;
+      font-size: 13.5px;
+      color: #3a5a30;
+      line-height: 1.65;
+    }
+    .definition strong { font-weight: 600; }
+
+    .panel-body { font-size: 15px; line-height: 1.8; color: #2a2a2a; }
+    .panel-body p + p { margin-top: 0.75rem; }
+
+    .highlight {
+      background: #eaf3de;
+      border-left: 3px solid #3B6D11;
+      padding: 12px 16px;
+      border-radius: 0 10px 10px 0;
+      margin: 1rem 0;
+      font-size: 14.5px;
+      color: #1e4a0d;
+      line-height: 1.7;
+    }
+
+    .vocab { margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid #e8ede4; }
+    .vocab-title {
+      font-size: 12px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.06em;
+      color: #7a9070; margin-bottom: 10px;
+    }
+    .vocab-grid { display: flex; flex-wrap: wrap; gap: 7px; }
+    .vocab-pill {
+      font-size: 13px; padding: 4px 12px;
+      border-radius: 14px; background: #f0f5ec;
+      border: 1px solid #d0dfc8; color: #3a5a30;
+    }
+
+    .conclusion-box {
+      background: #eaf3de; border-radius: 12px;
+      padding: 1.25rem 1.5rem; margin-bottom: 1.25rem;
+    }
+    .conclusion-box p { font-size: 15px; line-height: 1.8; color: #1e3a18; }
+
+    .nav-footer {
+      display: flex; justify-content: space-between;
+      align-items: center; margin-top: 1.25rem;
+    }
+    .nav-btn {
+      padding: 7px 18px; font-size: 13px; font-weight: 500;
+      border: 1px solid #c8d8c0; border-radius: 8px;
+      background: #fff; color: #4a6050; cursor: pointer; transition: all 0.15s;
+    }
+    .nav-btn:hover:not(:disabled) { background: #eaf3de; }
+    .nav-btn:disabled { opacity: 0.3; cursor: default; }
+    .progress { display: flex; gap: 6px; align-items: center; }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: #c8d8c0; transition: background 0.2s; }
+    .dot.active { background: #1D9E75; }
+  </style>
+</head>
+<body>
+<div class="site">
+
+  <div class="header">
+    <h1>🌍 L'écologie en Europe</h1>
+    <p>Des enjeux préoccupants</p>
+  </div>
+
+  <div class="tabs" id="tabs">
+    <button class="tab-btn active" data-idx="0">🌡 Changement climatique</button>
+    <button class="tab-btn" data-idx="1">🏭 Pollution</button>
+    <button class="tab-btn" data-idx="2">♻️ Déchets</button>
+    <button class="tab-btn" data-idx="3">🦋 Biodiversité</button>
+    <button class="tab-btn" data-idx="4">⛏ Ressources</button>
+    <button class="tab-btn" data-idx="5">🌱 Conclusion</button>
+  </div>
+
+  <!-- PANEL 0 -->
+  <div id="panel-0" class="panel active">
+    <div class="panel-card">
+      <div class="panel-header">
+        <div class="panel-icon" style="background:#E1F5EE; color:#0F6E56;">🌡</div>
+        <div class="panel-title">1. Le changement climatique</div>
+      </div>
+      <div class="definition">
+        <strong>Climat</strong> = Ensemble de circonstances atmosphériques et météorologiques (humidité, pressions, températures…) propres à une région.
+      </div>
+      <div class="panel-body">
+        <p>En Europe ainsi que dans le reste du monde, le climat évolue rapidement. En moyenne, les températures augmentent l'été et diminuent l'hiver.</p>
+        <div class="highlight">
+          Ces changements ont de nombreuses conséquences : augmentation du niveau des océans, diminution de la fertilité des sols, disparition de nombreuses espèces animales…
+        </div>
+        <p>Les scientifiques ont longtemps observé l'évolution du climat afin d'avertir les différents états de l'urgence de la situation. Les conséquences du changement climatique sont nombreuses, mais ses causes également.</p>
+      </div>
+      <div class="vocab">
+        <div class="vocab-title">Mots clés</div>
+        <div class="vocab-grid">
+          <span class="vocab-pill">le niveau des océans</span>
+          <span class="vocab-pill">la fertilité des sols</span>
+          <span class="vocab-pill">une espèce animale</span>
+          <span class="vocab-pill">avertir</span>
+          <span class="vocab-pill">l'urgence</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANEL 1 -->
+  <div id="panel-1" class="panel">
+    <div class="panel-card">
+      <div class="panel-header">
+        <div class="panel-icon" style="background:#FAECE7; color:#993C1D;">🏭</div>
+        <div class="panel-title">2. La pollution</div>
+      </div>
+      <div class="definition">
+        <strong>Pollution</strong> = La dégradation de l'environnement par des substances (naturelles, chimiques ou radioactives), des déchets (ménagers ou industriels) ou des nuisances diverses (sonores, lumineuses, thermiques, biologiques, etc.).
+      </div>
+      <div class="panel-body">
+        <p>L'activité humaine pollue de nombreux endroits de la planète, notamment en raison du rejet massif de substances toxiques dans la nature.</p>
+        <div class="highlight">
+          L'utilisation de certains pesticides affecte durablement l'eau présente dans les sous-sols et <strong>augmente les risques de cancer</strong>.
+        </div>
+        <p>Les grandes villes ne sont pas épargnées par la pollution de l'air, en raison de la forte concentration de gaz nocifs provenant en partie des moyens de transports qui utilisent de l'essence.</p>
+      </div>
+      <div class="vocab">
+        <div class="vocab-title">Mots clés</div>
+        <div class="vocab-grid">
+          <span class="vocab-pill">une substance toxique</span>
+          <span class="vocab-pill">un pesticide</span>
+          <span class="vocab-pill">les sous-sols</span>
+          <span class="vocab-pill">un gaz nocif</span>
+          <span class="vocab-pill">l'essence</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANEL 2 -->
+  <div id="panel-2" class="panel">
+    <div class="panel-card">
+      <div class="panel-header">
+        <div class="panel-icon" style="background:#FAEEDA; color:#854F0B;">♻️</div>
+        <div class="panel-title">3. La production de déchets</div>
+      </div>
+      <div class="definition">
+        <strong>Déchet</strong> = L'Union Européenne définit un déchet comme "toute substance ou tout objet dont le détenteur se défait ou dont il a l'intention ou l'obligation de se défaire".
+      </div>
+      <div class="panel-body">
+        <p>L'économie de marché est basée sur une exploitation des ressources de l'environnement dans le but de produire le maximum de biens. Cette production augmente par conséquent le nombre de déchets.</p>
+        <div class="highlight">
+          Chaque année, les Européens jettent des millions de tonnes de plastique dont une partie seulement est recyclée. Le recyclage ne peut pas être <strong>l'unique solution</strong>.
+        </div>
+        <p>Beaucoup de scientifiques argumentent qu'il faut traiter le problème à sa source : il est préférable de réduire drastiquement la production de déchets par une transformation de nos habitudes.</p>
+      </div>
+      <div class="vocab">
+        <div class="vocab-title">Mots clés</div>
+        <div class="vocab-grid">
+          <span class="vocab-pill">les déchets</span>
+          <span class="vocab-pill">le recyclage</span>
+          <span class="vocab-pill">réduire</span>
+          <span class="vocab-pill">drastiquement</span>
+          <span class="vocab-pill">nos habitudes</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANEL 3 -->
+  <div id="panel-3" class="panel">
+    <div class="panel-card">
+      <div class="panel-header">
+        <div class="panel-icon" style="background:#EAF3DE; color:#3B6D11;">🦋</div>
+        <div class="panel-title">4. La destruction de la biodiversité</div>
+      </div>
+      <div class="definition">
+        <strong>Biodiversité</strong> = Diversité des espèces vivantes (micro-organismes, végétaux, animaux) présentes dans un milieu.
+      </div>
+      <div class="panel-body">
+        <p>La biodiversité est essentielle à la survie de l'espèce humaine. Mais cet environnement est fragile et ne supporte pas de trop changer.</p>
+        <div class="highlight">
+          La pollution des sols et de l'air, les changements climatiques et la montée du niveau de la mer sont quelques exemples des causes de la <strong>destruction de la biodiversité</strong>.
+        </div>
+        <p>De nombreuses espèces disparaissent au fur et à mesure de ces changements. Il est donc urgent de changer nos habitudes pour assurer la préservation de ces systèmes naturels fragiles.</p>
+      </div>
+      <div class="vocab">
+        <div class="vocab-title">Mots clés</div>
+        <div class="vocab-grid">
+          <span class="vocab-pill">la survie</span>
+          <span class="vocab-pill">fragile</span>
+          <span class="vocab-pill">la montée des eaux</span>
+          <span class="vocab-pill">disparaître</span>
+          <span class="vocab-pill">la préservation</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANEL 4 -->
+  <div id="panel-4" class="panel">
+    <div class="panel-card">
+      <div class="panel-header">
+        <div class="panel-icon" style="background:#EEEDFE; color:#534AB7;">⛏</div>
+        <div class="panel-title">5. L'exploitation des ressources</div>
+      </div>
+      <div class="definition">
+        <strong>Exploitation</strong> = Action d'assurer la production d'une matière, d'un minerai, d'un produit, etc. : exploitation d'une mine, d'un puits de pétrole.
+      </div>
+      <div class="panel-body">
+        <p>Les pays européens consomment de nombreuses ressources naturelles. Bien que la consommation de certaines ressources ne soit pas problématique pour l'environnement, d'autres ressources dites <strong>« non-renouvelables »</strong>, comme le pétrole, posent problème.</p>
+        <div class="highlight">
+          Ce modèle n'est pas soutenable, ni pour l'environnement, ni pour l'évolution de l'espèce humaine.
+        </div>
+      </div>
+      <div class="vocab">
+        <div class="vocab-title">Mots clés</div>
+        <div class="vocab-grid">
+          <span class="vocab-pill">une ressource naturelle</span>
+          <span class="vocab-pill">non-renouvelable</span>
+          <span class="vocab-pill">le pétrole</span>
+          <span class="vocab-pill">soutenable</span>
+          <span class="vocab-pill">l'exploitation</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANEL 5 -->
+  <div id="panel-5" class="panel">
+    <div class="panel-card">
+      <div class="panel-header">
+        <div class="panel-icon" style="background:#E1F5EE; color:#0F6E56;">🌱</div>
+        <div class="panel-title">Conclusion</div>
+      </div>
+      <div class="conclusion-box">
+        <p>En Europe, les problèmes écologiques sont multiples et liés entre eux. L'augmentation, la transformation, la pollution ou encore la destruction montrent l'ampleur des défis environnementaux actuels.</p>
+      </div>
+      <div class="vocab">
+        <div class="vocab-title">Les 5 grands enjeux</div>
+        <div class="vocab-grid">
+          <span class="vocab-pill" style="background:#E1F5EE; color:#085041; border-color:#9FE1CB;">🌡 Changement climatique</span>
+          <span class="vocab-pill" style="background:#FAECE7; color:#712B13; border-color:#F5C4B3;">🏭 Pollution</span>
+          <span class="vocab-pill" style="background:#FAEEDA; color:#633806; border-color:#FAC775;">♻️ Déchets</span>
+          <span class="vocab-pill" style="background:#EAF3DE; color:#27500A; border-color:#C0DD97;">🦋 Biodiversité</span>
+          <span class="vocab-pill" style="background:#EEEDFE; color:#3C3489; border-color:#CECBF6;">⛏ Ressources</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-footer">
+    <button class="nav-btn" id="prev-btn" disabled>← Précédent</button>
+    <div class="progress" id="progress"></div>
+    <button class="nav-btn" id="next-btn">Suivant →</button>
+  </div>
+
+</div>
+<script>
+  const tabs = document.querySelectorAll('.tab-btn');
+  const panels = document.querySelectorAll('.panel');
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+  const progressEl = document.getElementById('progress');
+  let current = 0;
+  const total = tabs.length;
+  for (let i = 0; i < total; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    progressEl.appendChild(d);
+  }
+  function show(idx) {
+    tabs.forEach(t => t.classList.remove('active'));
+    panels.forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+    tabs[idx].classList.add('active');
+    document.getElementById('panel-' + idx).classList.add('active');
+    prevBtn.disabled = idx === 0;
+    nextBtn.disabled = idx === total - 1;
+    current = idx;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  tabs.forEach(t => t.addEventListener('click', () => show(parseInt(t.dataset.idx))));
+  prevBtn.addEventListener('click', () => show(current - 1));
+  nextBtn.addEventListener('click', () => show(current + 1));
+</script>
+</body>
+</html>
+
